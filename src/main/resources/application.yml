@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: gabi-token-proxy
+
+  profiles:
+    active: local,test,prod
