@@ -675,7 +675,7 @@
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "test-secret",
-    "redirectUris" : [ "/*" ],
+    "redirectUris" : [ "*" ],
     "webOrigins" : [ "/*" ],
     "notBefore" : 0,
     "bearerOnly" : false,

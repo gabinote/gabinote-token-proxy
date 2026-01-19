@@ -1,5 +1,6 @@
 package com.gabinote.tokenproxy.common.web.advice
 
+import com.gabinote.tokenproxy.common.util.exception.service.BadToken
 import com.gabinote.tokenproxy.common.util.exception.service.ResourceDuplicate
 import com.gabinote.tokenproxy.common.util.exception.service.ResourceNotFound
 import com.gabinote.tokenproxy.common.util.exception.service.ResourceNotValid
@@ -144,6 +145,33 @@ class ServiceExceptionAdvice {
             path = request.requestURI,
             status = status,
             error = "ServerError",
+            message = ex.logMessage
+        )
+        logger.error { log.toString() }
+        return ResponseEntity(problemDetail, status)
+    }
+
+    @ExceptionHandler(BadToken::class)
+    fun handleBadToken(
+        ex: ServerError,
+        request: HttpServletRequest,
+    ): ResponseEntity<ProblemDetail> {
+        val requestId = getRequestId(request)
+        val status = HttpStatus.FORBIDDEN
+
+        val problemDetail = problemDetail(
+            status = status,
+            title = "Bad Token",
+            detail = ex.errorMessage,
+            requestId = requestId
+        )
+
+        val log = ErrorLog(
+            requestId = requestId,
+            method = request.method,
+            path = request.requestURI,
+            status = status,
+            error = "BadToken",
             message = ex.logMessage
         )
         logger.error { log.toString() }

@@ -2,6 +2,7 @@ package com.gabinote.tokenproxy.testSupport.testTemplate
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.gabinote.tokenproxy.testSupport.testConfig.keycloak.UseTestKeycloak
+import com.gabinote.tokenproxy.testSupport.testUtil.keycloak.TestKeycloakUtil
 import com.gabinote.tokenproxy.testSupport.testUtil.time.TestTimeProvider
 import io.kotest.core.spec.style.FeatureSpec
 import io.kotest.core.test.TestCaseOrder
@@ -18,6 +19,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 @Import(
     TestTimeProvider::class,
+    TestKeycloakUtil::class,
 )
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -27,6 +29,9 @@ abstract class IntegrationTestTemplate : FeatureSpec() {
 
     @Autowired
     lateinit var objectMapper: ObjectMapper
+
+    @Autowired
+    lateinit var testKeycloakUtil: TestKeycloakUtil
 
 
 
@@ -43,6 +48,10 @@ abstract class IntegrationTestTemplate : FeatureSpec() {
     init {
         beforeSpec {
             beforeSpec()
+        }
+
+        beforeTest{
+            testKeycloakUtil.recreateRealm()
         }
     }
 }

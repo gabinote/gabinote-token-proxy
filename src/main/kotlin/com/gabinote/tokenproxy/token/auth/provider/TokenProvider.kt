@@ -14,7 +14,7 @@ interface TokenProvider {
      * @param dto 리다이렉트 요청 데이터
      * @return 리다이렉트할 URL
      */
-    fun generateIdpUrl(dto: RedirectIdpReqServiceDto): String
+    fun generateIdpUri(dto: RedirectIdpReqServiceDto): String
 
     /**
      * Identity Broker Login Flow 에서 발급된 토큰을 Access Token, Refresh Token 으로 교환

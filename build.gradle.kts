@@ -129,7 +129,8 @@ dependencies {
 
     //keycloak
     // https://mvnrepository.com/artifact/org.keycloak/keycloak-admin-client
-    implementation("org.keycloak:keycloak-admin-client:26.0.5")
+    implementation("org.keycloak:keycloak-admin-client:26.0.8")
+    implementation("org.keycloak:keycloak-authz-client:26.0.8")
 
     // circuit breaker
     implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
