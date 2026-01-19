@@ -153,11 +153,11 @@ class ServiceExceptionAdvice {
 
     @ExceptionHandler(BadToken::class)
     fun handleBadToken(
-        ex: ServerError,
+        ex: BadToken,
         request: HttpServletRequest,
     ): ResponseEntity<ProblemDetail> {
         val requestId = getRequestId(request)
-        val status = HttpStatus.FORBIDDEN
+        val status = HttpStatus.UNAUTHORIZED
 
         val problemDetail = problemDetail(
             status = status,

@@ -1,7 +1,9 @@
 package com.gabinote.tokenproxy.token.mapping.token
 
+import com.gabinote.tokenproxy.token.dto.token.controller.RedirectIdpReqControllerDto
 import com.gabinote.tokenproxy.token.dto.token.controller.TokenExchangeReqControllerDto
 import com.gabinote.tokenproxy.token.dto.token.controller.TokenResControllerDto
+import com.gabinote.tokenproxy.token.dto.token.service.RedirectIdpReqServiceDto
 import com.gabinote.tokenproxy.token.dto.token.service.TokenExchangeReqServiceDto
 import com.gabinote.tokenproxy.token.dto.token.service.TokenExchangeResServiceDto
 import com.gabinote.tokenproxy.token.dto.token.service.TokenRefreshResServiceDto
@@ -42,4 +44,10 @@ interface TokenMapper {
     fun toExchangeReqServiceDto(dto: TokenExchangeReqControllerDto) : TokenExchangeReqServiceDto
 
 
+    /**
+     *  RedirectIdpReqControllerDto -> RedirectIdpReqServiceDto 변환
+     *  @param dto RedirectIdpReqControllerDto
+     *  @return RedirectIdpReqServiceDto
+     */
+    fun toRedirectReqServiceDto(dto: RedirectIdpReqControllerDto) : RedirectIdpReqServiceDto
 }
