@@ -99,6 +99,7 @@ class TokenApiController(
             .secure(true)
             .path(refreshCookieProp.allowPath)
             .maxAge(refreshCookieProp.maxAge)
+            .domain(refreshCookieProp.allowDomain)
             .sameSite("Strict")
             .build()
 
@@ -111,6 +112,7 @@ class TokenApiController(
             .secure(true)
             .path(refreshCookieProp.allowPath)
             .maxAge(0)
+            .domain(refreshCookieProp.allowDomain)
             .sameSite("Strict")
             .build()
 
