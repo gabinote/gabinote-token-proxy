@@ -44,11 +44,7 @@ dependencies {
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 
     // test
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-
-//        exclude(group = "com.vaadin.external.google", module = "android-json")
-
-    }
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     // junit
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -64,8 +60,6 @@ dependencies {
     testImplementation("com.ninja-squad:springmockk:4.0.2")
     // testcontainers
     testImplementation("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:mongodb")
-    testImplementation("org.testcontainers:kafka")
     testImplementation("com.github.dasniko:testcontainers-keycloak:3.7.0")
     // https://mvnrepository.com/artifact/io.debezium/debezium-testing-testcontainers
     testImplementation("io.debezium:debezium-testing-testcontainers:3.4.0.Final")
@@ -85,10 +79,6 @@ dependencies {
     // web
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-
-    // database
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
 
     // caching
     implementation("org.springframework.boot:spring-boot-starter-cache")
