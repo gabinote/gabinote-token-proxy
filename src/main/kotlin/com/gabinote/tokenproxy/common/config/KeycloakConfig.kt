@@ -7,10 +7,12 @@ import org.keycloak.admin.client.KeycloakBuilder
 import org.keycloak.authorization.client.AuthzClient
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.cloud.context.config.annotation.RefreshScope
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.keycloak.authorization.client.Configuration as KeycloakAuthzConfiguration
 
+@RefreshScope
 @EnableConfigurationProperties(KeycloakProperties::class)
 @Configuration
 class KeycloakConfig(

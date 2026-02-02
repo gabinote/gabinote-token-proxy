@@ -134,6 +134,9 @@ dependencies {
 
     // circuit breaker
     implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 }
 
 kotlin {
