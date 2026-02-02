@@ -1,0 +1,43 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  main:
+    allow-bean-definition-overriding: true
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  cloud:
+    config:
+      enabled: false
+
+logging:
+  config: classpath:logback-test.xml
+
+keycloak:
+  admin-client:
+    realm: gabinote-test
+  proxy:
+    allowed-redirect-uri: http://localhost:8080
+    allowed-idp-hints: [google]
+
+    refresh-cookie:
+      name: GABI_TEST_PROXY_REFRESH_TOKEN
+      max-age: 1209600 # 14 days in seconds
+      allow-path: /
+      allow-domain: localhost
+
+test-keycloak:
+  admin-client:
+    realm: master
+    client-id: test-admin-cli
+    client-secret: admin-secret
+
+  test-client:
+    id: gabinote-test-client
+    secret: test-secret
+
+
+
+

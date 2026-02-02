@@ -34,8 +34,8 @@ class KeycloakContainerInitializer : ApplicationContextInitializer<ConfigurableA
         TestPropertyValues.of(
             "keycloak.admin-client.server-url=${keycloak.authServerUrl}",
             "keycloak.admin-client.realm=gabinote-test",
-            "keycloak.admin-client.client-id=api-admin-client",
-            "keycloak.admin-client.client-secret=admin-client-secret",
+            "keycloak.admin-client.client-id=gabinote-test-client",
+            "keycloak.admin-client.client-secret=test-secret",
 
         ).applyTo(context.environment)
 

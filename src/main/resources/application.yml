@@ -3,4 +3,5 @@ spring:
     name: gabi-token-proxy
 
   profiles:
-    active: local,test,prod
+    active: test,prod,preview
+
