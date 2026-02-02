@@ -4,6 +4,7 @@ import com.gabinote.tokenproxy.common.config.properties.TokenProperties
 import com.gabinote.tokenproxy.common.config.properties.TokenRefreshProperties
 import com.gabinote.tokenproxy.common.util.exception.controller.RefreshCookieNotFound
 import com.gabinote.tokenproxy.token.dto.token.controller.RedirectIdpReqControllerDto
+import com.gabinote.tokenproxy.token.dto.token.controller.RedirectIdpResControllerDto
 import com.gabinote.tokenproxy.token.dto.token.controller.TokenExchangeReqControllerDto
 import com.gabinote.tokenproxy.token.dto.token.controller.TokenResControllerDto
 import com.gabinote.tokenproxy.token.dto.token.service.RedirectIdpReqServiceDto
@@ -82,13 +83,13 @@ class TokenApiController(
         @Validated
         @RequestBody
         dto: RedirectIdpReqControllerDto
-    ): ResponseEntity<Void>{
+    ): ResponseEntity<RedirectIdpResControllerDto>{
         val reqDto = tokenMapper.toRedirectReqServiceDto(dto)
         val uri = tokenService.generateIdpUri(reqDto)
-
-        return ResponseEntity.status(302)
-            .header("Location", uri)
-            .build()
+        val res = RedirectIdpResControllerDto(
+            url = uri
+        )
+        return ResponseEntity.ok(res)
     }
 
 

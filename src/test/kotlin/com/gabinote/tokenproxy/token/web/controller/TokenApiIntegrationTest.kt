@@ -27,7 +27,7 @@ class TokenApiIntegrationTest : IntegrationTestTemplate() {
         feature("[Token] Token API Integration Test") {
 
             feature("[POST] /api/v1/token/idp-login") {
-                scenario("정상적인 IDP 로그인 요청이 주어지면, Keycloak IDP 인증 URI로 리다이렉트한다.") {
+                scenario("정상적인 IDP 로그인 요청이 주어지면, Keycloak IDP 인증 URI를 응답한다.") {
                     val verifier = PkceHelper.generateCodeVerifier()
                     val challenge = PkceHelper.generateCodeChallenge(verifier)
                     val redirectUri = "http://localhost:8080/tmp"
@@ -46,11 +46,12 @@ class TokenApiIntegrationTest : IntegrationTestTemplate() {
                     }.When {
                         post("/token/idp-login")
                     }.Then {
-                        statusCode(302)
-                        header("Location", containsString("protocol/openid-connect/auth"))
-                        header("Location", containsString("redirect_uri=$redirectUri"))
-                        header("Location", containsString("code_challenge=$challenge"))
-                        header("Location", containsString("kc_idp_hint=$idpHint"))
+                        statusCode(200)
+                        body("url", notNullValue())
+                        body("url", containsString("protocol/openid-connect/auth"))
+                        body("url", containsString("redirect_uri=$redirectUri"))
+                        body("url", containsString("code_challenge=$challenge"))
+                        body("url", containsString("kc_idp_hint=$idpHint"))
                     }
                 }
 
