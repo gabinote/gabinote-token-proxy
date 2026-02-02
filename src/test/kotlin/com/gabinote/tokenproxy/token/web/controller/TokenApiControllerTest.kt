@@ -10,6 +10,7 @@ import com.gabinote.tokenproxy.common.config.properties.TokenRefreshProperties
 import com.gabinote.tokenproxy.common.web.advice.ControllerExceptionAdvice
 import com.gabinote.tokenproxy.common.web.advice.GlobalExceptionAdvice
 import com.gabinote.tokenproxy.token.dto.token.controller.RedirectIdpReqControllerDto
+import com.gabinote.tokenproxy.token.dto.token.controller.RedirectIdpResControllerDto
 import com.gabinote.tokenproxy.token.dto.token.controller.TokenExchangeReqControllerDto
 import com.gabinote.tokenproxy.token.dto.token.controller.TokenResControllerDto
 import com.gabinote.tokenproxy.token.dto.token.service.RedirectIdpReqServiceDto
@@ -403,21 +404,22 @@ class TokenApiControllerTest : WebMvcTestTemplate() {
                         idpHint = reqDto.idpHint
                     )
                     val expectedUri = "https://keycloak.example.com/auth?redirect_uri=${reqDto.redirectUri}"
+                    val expectedRes = RedirectIdpResControllerDto(url = expectedUri)
 
                     beforeTest {
                         every { tokenMapper.toRedirectReqServiceDto(reqDto) } returns serviceReqDto
                         every { tokenService.generateIdpUri(serviceReqDto) } returns expectedUri
                     }
 
-                    it("IDP 로그인 URI로 리다이렉트하고, 302 Found를 응답한다") {
+                    it("IDP 로그인 URI를 제공하고, 200 OK를 응답한다") {
                         mockMvc.perform(
                             post("$apiPrefix/idp-login")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(reqDto))
                         )
                             .andDo(print())
-                            .andExpect(status().isFound)
-                            .andExpect(header().string("Location", expectedUri))
+                            .andExpect(status().isOk)
+                            .andExpect(content().json(objectMapper.writeValueAsString(expectedRes)))
                             .andDo(
                                 document(
                                     "token/getIdpLoginUri",
@@ -427,7 +429,7 @@ class TokenApiControllerTest : WebMvcTestTemplate() {
                                         ResourceSnippetParameters
                                             .builder()
                                             .tags("Token")
-                                            .description("IDP 로그인 URI 리다이렉트")
+                                            .description("IDP 로그인 URI 제공")
                                             .requestFields(
                                                 fieldWithPath("redirect_uri").type(SimpleType.STRING)
                                                     .description("리다이렉트 URI"),
@@ -436,6 +438,11 @@ class TokenApiControllerTest : WebMvcTestTemplate() {
                                                 fieldWithPath("idp_hint").type(SimpleType.STRING)
                                                     .description("IDP 힌트 (google, kakao 등)")
                                             )
+                                            .responseFields(
+                                                fieldWithPath("url").type(SimpleType.STRING)
+                                                    .description("IDP 로그인 URI")
+                                            )
+                                            .responseSchema(Schema("RedirectIdpResponse"))
                                             .build()
                                     )
                                 )
